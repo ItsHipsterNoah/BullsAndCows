@@ -16,17 +16,19 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 	srand(time(NULL));
 	HiddenWord = words[rand() % 3];
     PrintLine(TEXT("Welcome to the Bulls and Cows game!\nPress enter to continue."));
+	PrintLine(TEXT("The word is " + FString::FromInt(HiddenWord.Len()) + " characters long."));
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-
+	
     ClearScreen();
 	int32 start = 0;
 	int32 bulls{ 0 }, cows{ 0 };
 	// first check if it's a match
 	if (Input == HiddenWord) {
 		PrintLine("Correct!");
+		return;
 	}
 	else if (lives == 0){
 		PrintLine("Game over!");
@@ -37,6 +39,8 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
 	}
 	else if (Input.Len() != HiddenWord.Len()) {
 		PrintLine(TEXT("Wrong number of characters"));
+		PrintLine(HiddenWord);
+		PrintLine(TEXT("The word is" + FString::FromInt(HiddenWord.Len()) + " characters long."));
 		PrintLine(FString::FromInt(lives) + " lives left");
 		lives--;
 	}
